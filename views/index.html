@@ -1,0 +1,58 @@
+{{!< main}}
+
+<section class="sub">      
+  <input type="text" id="email" placeholder="Enter your email" />
+  <button id="subscribe">Subscribe</button>
+</section>
+
+<section class="sub">
+  <textarea id="packs" rows="20" cols="40" placeholder="Enter your want subscribe's packages
+e.g.
+koa
+co
+...
+
+A week to send an email about package version information"></textarea>
+</section>
+
+
+<section class="info hide">
+  <p></p>
+  <button id="back">Go back</button>
+</section>
+
+
+<script type="text/javascript">
+  $("#subscribe").on("click", function (e) {
+    var btn = $(e.target);
+    btn.prop('disabled', true);
+
+    var email = $("#email").val();
+    var packs = $("#packs").val().trim().split("\n");
+
+    $.post("/", {email: email, packs: packs}, function(result){
+      $(".sub").hide();
+      $(".info").show();
+      btn.prop('disabled', false);
+      if (result.success) {
+        $(".info p").html("Subscribe's information is ok. Check your mailbox confirm.");
+      } else {
+        var info = "";
+        if (result.noPacks) {
+          info = "Subscribe's information is bad. The following packages can't found: <ul><li>" +
+            result.noPacks.join("</li><li>") +
+            "</li></ul>";
+        } else {
+          info = result.msg;
+        }
+        $(".info p").html(info);
+      }
+    });
+
+  });
+
+  $("#back").on("click", function (e) {
+    $(".sub").show();
+    $(".info").hide();
+  });
+</script>

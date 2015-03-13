@@ -1,0 +1,91 @@
+/* reset */
+* {
+  text - decoration: none;
+  font - size: 1em;
+  outline: none;
+  margin: 0;
+  padding: 0;
+}
+code, kbd, samp, pre, tt, var, textarea, input, select, isindex, listing, xmp, plaintext {
+  font: inherit;
+  white - space: normal
+}
+a, img, a img, iframe, form, abbr, acronym, object, applet, table, a abbr, a acronym {
+  border - width: 0
+}
+dfn, i, cite, var, address, em {
+  font - style: normal
+}
+th, b, strong, h1, h2, h3, h4, h5, h6, dt {
+  font - weight: 400
+}
+caption, th, td {
+  text - align: left
+}
+
+/* main */
+html {
+  background: #FFF;
+  color: #000;
+  line-height: 1;
+}
+* {
+  font: 15px/1.4em 'Courier New', Courier, monospace;
+}
+.hide {
+  display: none;
+}
+
+body {
+  margin-left: 2em;
+}
+
+header, section, footer {
+  padding: 1em 0;
+}
+
+header .title {
+  font-size: 2em;
+}
+
+input {
+  border: 1px solid #fff;
+
+}
+
+button {
+  padding: 8px;
+  border: 1px solid #fff;
+  background-color: #fff;
+
+}
+
+button:hover {
+  border: 1px solid #999;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+textarea {
+  border: 1px solid #fff;
+  max-width: 30em;
+}
+
+.info p {
+  margin: 1em 0;
+}
+
+ul {
+  margin: 1em 0 1em 2em;
+}
+
+a, a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+
+
