@@ -37,7 +37,7 @@ exports.sendConfirmMail = function (email, token, packs) {
         subject: subject,
         html: html
     }, function (err) {
-        err && console.error('sendConfirmMail error:', err);
+        err && console.error('sendConfirmMail error:', err, err.stack);
     });
 };
 
@@ -83,7 +83,7 @@ exports.sendPackMail = function (email, updatedPacks, noUpdatedPacks) {
         subject: subject,
         html: html
     }, function (err) {
-        err && console.error('sendPackMail error:', err);
+        err && console.error('sendPackMail error:', err, err.stack);
     });
 };
 
