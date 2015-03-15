@@ -38,7 +38,7 @@ function* updatePack (query) {
         if (newPack.body['dist-tags']['latest'] !== pack.latest){
             pack.latest = newPack.body['dist-tags']['latest'];
             pack.description = newPack.body['description'];
-            pack.updateAt = new Date;
+            pack.updatedAt = new Date;
             yield pack.save();
         }
     }
@@ -60,7 +60,7 @@ function* sendPackMail (query) {
 
             var newPack = yield Packs.findOne({name: pack}).lean().exec();
 
-            if (Math.abs(new Date - newPack.updateAt) < 7*24*60*60*1000) {
+            if (Math.abs(new Date - newPack.updatedAt) < 7*24*60*60*1000) {
                 updatedPacks.push(newPack);
             } else {
                 noUpdatedPacks.push(newPack);

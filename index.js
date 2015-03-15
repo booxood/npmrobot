@@ -1,11 +1,11 @@
 'use strict';
 
-require('console-wrap')();
-require('./common/crontab');
-
 var config = require('./config');
 if(config.newRelic)
     require('newrelic');
+
+require('console-wrap')();
+require('./common/crontab');
 
 var koa = require('koa');
 var logger = require('koa-logger');
