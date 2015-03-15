@@ -68,6 +68,8 @@ process.on('uncaughtException', function(err) {
   console.error('Caught exception: ' + err);
 });
 
-if (!module.parent) app.listen(config.port);
+if (!module.parent) app.listen(config.port, function () {
+    console.log('server listening at:', config.port)
+});
 
 

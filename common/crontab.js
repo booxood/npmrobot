@@ -9,20 +9,32 @@ var mail = require('./mail');
 var Packs = require('../models').Packs;
 var Users = require('../models').Users;
 
+var updateSche = later.parse.text(config.updatePackSchedule);
+var sendSche = later.parse.text(config.sendPackMailSchedule);
+
+if (updateSche.error !== -1) {
+    console.error('updatePackSchedule error:', config.updatePackSchedule);
+    throw new Error('crontab schedule error');
+}
+
+if (sendSche.error !== -1) {
+    console.error('sendPackMailSchedule error:', config.sendPackMailSchedule);
+    throw new Error('crontab schedule error');
+}
 
 later.setInterval(function(){
     co(updatePack).catch(function (err) {
         console.error('setInterval updatePack error:', err)
         console.error(err.stack);
     });
-}, later.parse.text(config.updatePackSchedule));
+}, updateSche);
 
 later.setInterval(function(){
     co(sendPackMail).catch(function (err) {
         console.error('setInterval sendPackMail error:', err)
         console.error(err.stack);
     });
-}, later.parse.text(config.sendPackMailSchedule));
+}, sendSche);
 
 
 

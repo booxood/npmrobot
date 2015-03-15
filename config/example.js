@@ -42,7 +42,7 @@ var config = {
     // crontab
     // http://bunkat.github.io/later/parsers.html#text
     updatePackSchedule: 'at 1:00 am',
-    sendPackMailSchedule: 'at 6:00 am every Monday',
+    sendPackMailSchedule: 'at 6:00 am on Monday',
 
     // for logger
     logPath: ''
