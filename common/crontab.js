@@ -72,7 +72,7 @@ function* sendPackMail (query) {
 
             var newPack = yield Packs.findOne({name: pack}).lean().exec();
 
-            if (Math.abs(new Date - newPack.updatedAt) < 7*24*60*60*1000) {
+            if (newPack.updatedAt && Math.abs(new Date - newPack.updatedAt) < 7*24*60*60*1000) {
                 updatedPacks.push(newPack);
             } else {
                 noUpdatedPacks.push(newPack);

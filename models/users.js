@@ -20,22 +20,6 @@ var UsersSchema = new Schema({
     }
 });
 
-UsersSchema.statics.confirm = function (email, token, cb) {
-    var self = this;
-    return new Promise(function (resole, reject) {
-        self.findOne({
-            email: email,
-            token: token
-        }, function (err, doc) {
-            if (err) {
-                reject(err);
-            } else {
-                resole(self);
-            }
-        });
-    });
-}
-
 var Users = mongoose.model('Users', UsersSchema);
 
 module.exports = Users;

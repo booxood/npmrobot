@@ -6,9 +6,9 @@ var Schema = mongoose.Schema;
 
 var PacksSchema = new Schema({
     name: String,
-    isUpdate: Boolean,
     latest: String,
-    updatedAt: Date
+    updatedAt: Date,
+    description: String
 });
 
 module.exports = mongoose.model('Packs', PacksSchema);

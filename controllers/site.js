@@ -84,6 +84,18 @@ exports.confirm = function* () {
     if (user) {
         user.type = 1;
         yield user.save();
+
+        var packs = user.packs;
+        for(var i=0; i<packs.length; i++){
+            var pack = packs[i];
+            var have = yield Packs.findOne({name: pack}).exec();
+            if (!have) {
+                yield (new Packs({
+                    name: pack
+                })).save();
+            }
+        }
+
         result = 'Subscribe success.';
     }
 
