@@ -1,11 +1,10 @@
 'use strict';
 
+require('console-wrap')();
+require('./common/crontab');
 var config = require('./config');
 if(config.newRelic)
     require('newrelic');
-
-require('console-wrap')();
-require('./common/crontab');
 
 var koa = require('koa');
 var logger = require('koa-logger');
@@ -64,9 +63,9 @@ app.on('error', function (err, ctx) {
     console.error(err.stack);
 });
 
-process.on('uncaughtException', function(err) {
-  console.error('Caught exception: ' + err);
-});
+// process.on('uncaughtException', function(err) {
+//   console.error('Caught exception: ' + err);
+// });
 
 if (!module.parent) app.listen(config.port, function () {
     console.log('server listening at:', config.port)

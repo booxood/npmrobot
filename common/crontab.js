@@ -36,24 +36,22 @@ later.setInterval(function(){
     });
 }, sendSche);
 
-
-
 function* updatePack (query) {
     console.log('crontab updatePack');
     query = query || {};
     var packs = yield Packs.find(query).exec();
 
-    for(var i=0; i<packs.length; i++){
-        var pack = packs[0];
-        var newPack = yield request.get({url: config.npmRegistry + pack.name, json: true});
-
-        if (newPack.body['dist-tags']['latest'] !== pack.latest){
-            pack.latest = newPack.body['dist-tags']['latest'];
-            pack.description = newPack.body['description'];
-            pack.updatedAt = new Date;
-            yield pack.save();
-        }
-    }
+    packs.forEach(function (pack) {
+        co(function* () {
+            var newPack = yield request.get({url: config.npmRegistry + pack.name, json: true});
+            if (newPack.body['dist-tags']['latest'] !== pack.latest){
+                pack.latest = newPack.body['dist-tags']['latest'];
+                pack.description = newPack.body['description'];
+                pack.updatedAt = new Date;
+                yield pack.save();
+            }
+        }).catch(console.error);
+    });
 }
 
 function* sendPackMail (query) {
@@ -61,25 +59,26 @@ function* sendPackMail (query) {
     query = query || {type: {$ne: 0}};
     var users = yield Users.find(query).exec();
 
-    var updatedPacks = [];
-    var noUpdatedPacks = [];
-    for(var i=0; i<users.length; i++){
-        var user = users[i];
+    users.forEach(function (user) {
         var packs = user.packs;
-
-        for(var j=0; j<packs.length; j++){
-            var pack = packs[j];
-
-            var newPack = yield Packs.findOne({name: pack}).lean().exec();
-
-            if (newPack.updatedAt && Math.abs(new Date - newPack.updatedAt) < 7*24*60*60*1000) {
-                updatedPacks.push(newPack);
-            } else {
-                noUpdatedPacks.push(newPack);
+        var packsGen = packs.map(function (pack) {
+            return function* () {
+                var newPack = yield Packs.findOne({name: pack}).lean().exec();
+                if (newPack.updatedAt && Math.abs(new Date - newPack.updatedAt) < 7*24*60*60*1000) {
+                    newPack.updated = true;
+                } else {
+                    newPack.updated = false;
+                }
+                return newPack;
             }
-        }
-        
-        mail.sendPackMail(user.email, updatedPacks, noUpdatedPacks);
-    }
+        });
+
+        co(function* () {
+            var result = yield packsGen;
+            mail.sendPackMail(user.email, result);
+        }).catch(console.error);
+
+    })
 
 }
+

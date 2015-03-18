@@ -9,9 +9,9 @@ var transporter = mailer.createTransport(config.mail);
 var ROOT_URL = 'http://' + config.host;
 
 exports.sendConfirmMail = function (email, token, packs) {
+    console.log('sendConfirmMail:', email, token, packs);
     if (config.NODE_ENV !== 'production') {
         console.log('Not in production mode, no send mail!');
-        console.log(email, token, packs);
         return;
     }
 
@@ -41,10 +41,10 @@ exports.sendConfirmMail = function (email, token, packs) {
     });
 };
 
-exports.sendPackMail = function (email, updatedPacks, noUpdatedPacks) {
+exports.sendPackMail = function (email, result) {
+    console.log('sendPackMail:', email);
     if (config.NODE_ENV !== 'production') {
         console.log('Not in production mode, no send mail!');
-        console.log(email, updatedPacks, noUpdatedPacks);
         return;
     }
 
@@ -53,17 +53,17 @@ exports.sendPackMail = function (email, updatedPacks, noUpdatedPacks) {
     var to = email;
     var subject = config.name + ' packages update mail';
 
-    var count = updatedPacks.length + noUpdatedPacks.length;
+    var count = result.length;
 
     var updatedPacksHtml = '';
-    updatedPacks.forEach(function (pack) {
-        updatedPacksHtml += '<li>'+pack.name+' '+pack.latest+' '+pack.description+'</li>'
-    })
-
     var noUpdatedPacksHtml = '';
-    noUpdatedPacks.forEach(function (pack) {
-        noUpdatedPacksHtml += '<li>'+pack.name+' '+pack.latest+' '+pack.description+'</li>'
-    })
+    result.forEach(function (pack) {
+        if (pack.updated) {
+            updatedPacksHtml += '<li>'+pack.name+' '+pack.latest+' '+pack.description+'</li>'
+        } else {
+            noUpdatedPacksHtml += '<li>'+pack.name+' '+pack.latest+' '+pack.description+'</li>'
+        }
+    });
 
     var html = '<p>Your subscribing ' + count + ' packages.</p>' +
     '<p>In the last week had updated\'s packages:</p>' +
