@@ -4,7 +4,9 @@
   "description": "npm robot",
   "main": "index.js",
   "scripts": {
-    "start": "node --harmony index.js",
+    "start": "node index.js",
+    "dev": "NODE_ENV=development node index.js",
+    "prod": "NODE_ENV=prodoction node index.js",
     "test": "make test-all"
   },
   "keywords": [
@@ -12,7 +14,7 @@
     "robot"
   ],
   "engines": {
-    "node": "0.12.0"
+    "node": "5"
   },
   "author": "Liucw",
   "license": "MIT",
@@ -40,7 +42,8 @@
     "mongoose": "^4.0.1",
     "newrelic": "^1.17.0",
     "node-uuid": "^1.4.2",
-    "nodemailer": "^1.3.1"
+    "nodemailer": "^1.3.1",
+    "require-by-env": "1.0.0"
   },
   "devDependencies": {
     "mocha": "*",
