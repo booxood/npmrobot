@@ -6,16 +6,10 @@ var request = require('supertest').agent(app.listen())
 
 var email = 'test@email.com'
 
-describe('site.js', function () {
+describe('API server', function () {
 
-    it('GET /', function (done) {
-        request.get('/')
-        .expect(200)
-        .end(done)
-    })
-
-    it('POST / should return {success: true}', function (done) {
-        request.post('/')
+    it('POST /api/subscribe should return {success: true}', function (done) {
+        request.post('/api/subscribe')
         .send({
             email: email,
             packs: ['koa', 'co', 'npmrobot']
@@ -28,9 +22,9 @@ describe('site.js', function () {
         })
     })
 
-    it('POST / should return {success:false, noPacks: []}', function (done) {
+    it('POST /api/subscribe should return {success:false, noPacks: []}', function (done) {
         var npm404 = 'npm-404-' + Math.floor(1000*Math.random())
-        request.post('/')
+        request.post('/api/subscribe')
         .send({
             email: email,
             packs: ['npmrobot', npm404]

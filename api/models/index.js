@@ -16,19 +16,13 @@ if (database.user && database.password) {
   dbURI = `mongodb://${database.host}:${database.port}/${database.db}`
 }
 
-if (config.NODE_ENV === 'test') {
-    dbURI += '_test'
-}
-
-console.log('dbURI:', dbURI)
-
 mongoose.connect(dbURI)
 
 // reset database for test
 exports.resetDatabase = function (cb) {
-    if (config.NODE_ENV === 'test') {
-        mongoose.connection.db.dropDatabase(cb)
-    }
+  if (config.NODE_ENV === 'test') {
+    mongoose.connection.db.dropDatabase(cb)
+  }
 }
 
 exports.Users = require('./users')
