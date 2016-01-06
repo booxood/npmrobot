@@ -1,0 +1,4 @@
+export const REQUEST_SUBSCRIBE = 'REQUEST_SUBSCRIBE'
+export const REQUEST_CONFIRM = 'REQUEST_CONFIRM'
+export const SUCCESS = 'SUCCESS'
+export const FAILURE = 'FAILURE'

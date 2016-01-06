@@ -1,0 +1,23 @@
+@import '~normalize.css/normalize.css';
+@import './const.scss';
+
+body {
+  background-color: $bg-color;
+  color: $text-color;
+  font: 16px 'Courier New', Courier, monospace;
+}
+
+button {
+  padding: 8px;
+  border: 1px solid $bg-color;
+  background-color: #fff;
+  border-radius: .5em;
+  outline: none;
+
+  &:hover {
+    border: 1px solid $text-color;
+  }
+}
+
+@import './main.scss';
+@import './info.scss';

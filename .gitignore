@@ -18,4 +18,5 @@ coverage.html
 /coverage
 
 .env
-config/config.js
+config/config.development.js
+config/config.production.js

@@ -1,6 +1,6 @@
-'use strict';
+'use strict'
 
-var app = require('../package.json');
+var app = require('../package.json')
 
 var config = {
     // for app description
@@ -9,12 +9,13 @@ var config = {
     host: 'npmrobot.com',
 
     // process env
-    port: process.env.PORT || 3000,
+    API_PORT: process.env.API_PORT || 3000,
+    API_HOST: '',
     NODE_ENV: process.env.NODE_ENV || 'development',
 
     // for database
     database: {
-        host: '127.0.0.1',
+        host: 'localhost',
         user: '',
         password: '',
         port: '27017',
@@ -46,6 +47,6 @@ var config = {
 
     // for logger
     logPath: ''
-};
+}
 
-module.exports = config;
+module.exports = config
